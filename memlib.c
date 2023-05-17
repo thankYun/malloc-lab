@@ -50,10 +50,12 @@ void mem_reset_brk()
     mem_brk = mem_start_brk;
 }
 
-/* 
- * mem_sbrk - simple model of the sbrk function. Extends the heap 
- *    by incr bytes and returns the start address of the new area. In
- *    this model, the heap cannot be shrunk.
+/**
+ * 힙을 확장하는 함수(축소는 불가능)
+ * 증가시키기 전의 끝 포인터 mem_brk를 old_brk로 저장하고 mem_brk를 확장한다.
+ * old_brk를 리턴한다
+ * 꽉 찬 메모리 'ㅁㅁㅁㅁ'에 'ㅇㅇㅇㅇ'만큼 확장시켰을 때 'ㅁㅁㅁㅁ/ㅇㅇㅇㅇ' 을 리턴하여, 새 헤더를 부여할 때, 그 위치(/)를 기준으로
+ * 헤더 푸터를 지정하기 위해 ord_brk를 리턴하는 것으로 보인다.
  */
 void *mem_sbrk(int incr) 
 {
